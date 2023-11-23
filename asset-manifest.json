@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.f855e6bc.css",
-    "main.js": "/static/js/main.b9b03d95.js",
-    "static/js/787.0a20ed0f.chunk.js": "/static/js/787.0a20ed0f.chunk.js",
-    "index.html": "/index.html",
-    "main.f855e6bc.css.map": "/static/css/main.f855e6bc.css.map",
-    "main.b9b03d95.js.map": "/static/js/main.b9b03d95.js.map",
-    "787.0a20ed0f.chunk.js.map": "/static/js/787.0a20ed0f.chunk.js.map"
+    "main.css": "/tesla-inventory-tracker/static/css/main.f855e6bc.css",
+    "main.js": "/tesla-inventory-tracker/static/js/main.9bf1bee6.js",
+    "static/js/787.15682a8e.chunk.js": "/tesla-inventory-tracker/static/js/787.15682a8e.chunk.js",
+    "index.html": "/tesla-inventory-tracker/index.html",
+    "main.f855e6bc.css.map": "/tesla-inventory-tracker/static/css/main.f855e6bc.css.map",
+    "main.9bf1bee6.js.map": "/tesla-inventory-tracker/static/js/main.9bf1bee6.js.map",
+    "787.15682a8e.chunk.js.map": "/tesla-inventory-tracker/static/js/787.15682a8e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.b9b03d95.js"
+    "static/js/main.9bf1bee6.js"
   ]
 }
