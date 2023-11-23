@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "node": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    // note you must disable the base rule as it can report incorrect errors
+    "no-use-before-define": "off",
+    "no-console": 1,
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-key": 2,
+    "react/prop-types": 0,
+    "react/display-name": 0,
+    "react/no-unescaped-entities": 0,
+    "@typescript-eslint/no-use-before-define": ["off"],
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      { "varsIgnorePattern": "^(React|_)", "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
+    ]
+  }
+}

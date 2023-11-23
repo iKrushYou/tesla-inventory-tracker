@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@mui/x-charts": "^6.18.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -15,11 +16,27 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.10.1",
+    "typescript": "^4.2.4",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "react-scripts": "5.0.1",
-    "gh-pages": "^3.1.0"
+    "@types/luxon": "^3.3.5",
+    "@types/material-ui": "^0.21.8",
+    "@types/papaparse": "^5.2.5",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
+    "prettier": "2.2.1",
+    "react-scripts": "5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
@@ -28,12 +45,6 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
