@@ -1,5 +1,6 @@
 {
-  "name": "tesla-inventory-viewer",
+  "name": "tesla-inventory-tracker",
+  "homepage": "https://ikrushyou.github.io/tesla-inventory-tracker",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
