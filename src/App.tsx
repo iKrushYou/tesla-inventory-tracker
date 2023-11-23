@@ -11,6 +11,7 @@ import {
   Link,
   Tooltip,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
@@ -80,7 +81,7 @@ export interface PriceInfo {
 }
 
 async function fetchTeslaInventory(): Promise<Car[]> {
-  const response = await fetch(
+  const response: InventoryResponse = await fetch(
     'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
     {
       body:
@@ -125,10 +126,14 @@ function filterCars(cars: Car[], invert: boolean): Car[] {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
 
   useEffect(() => {
-    fetchTeslaInventory().then((data) => setCars(data));
+    setIsLoading(true);
+    fetchTeslaInventory()
+      .then((data) => setCars(data))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const filteredCars: Car[] = filterCars(cars, false);
@@ -141,11 +146,11 @@ function App() {
         <Typography variant={'h4'} mb={'20px'}>
           MYP with (Potentially) HW3
         </Typography>
-        <CarGridView cars={filteredCars} />
+        {isLoading ? <CircularProgress /> : <CarGridView cars={filteredCars} />}
         <Typography variant={'h4'} mb={'20px'} mt={'20px'}>
           Other Results
         </Typography>
-        <CarGridView cars={otherCars} />
+        {isLoading ? <CircularProgress /> : <CarGridView cars={otherCars} />}
       </Container>
     </Box>
   );
