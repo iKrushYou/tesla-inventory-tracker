@@ -12,6 +12,8 @@ import {
   Tooltip,
   Typography,
   CircularProgress,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
@@ -80,26 +82,32 @@ export interface PriceInfo {
   active: string;
 }
 
-async function fetchTeslaInventory(): Promise<Car[]> {
-  const response: InventoryResponse = await fetch(
+type CarType = 'MYLR' | 'MYP';
+
+const searchParams: Record<CarType, string> = {
+  MYLR:
+    'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Long%20Range%20All-Wheel%20Drive',
+  MYP:
     'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
-    {
-      body:
-        'action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
-      cache: 'default',
-      credentials: 'omit',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
-      mode: 'cors',
-      redirect: 'follow',
-      referrer: 'https://preusedev.com/',
-      referrerPolicy: 'strict-origin-when-cross-origin',
-    }
-  ).then((res) => res.json());
+};
+
+async function fetchTeslaInventory(carType: CarType): Promise<Car[]> {
+  const response: InventoryResponse = await fetch(searchParams[carType], {
+    // body:
+    //   'action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
+    cache: 'default',
+    credentials: 'omit',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+    mode: 'cors',
+    redirect: 'follow',
+    referrer: 'https://preusedev.com/',
+    referrerPolicy: 'strict-origin-when-cross-origin',
+  }).then((res) => res.json());
   return response.data;
 }
 
@@ -108,33 +116,37 @@ function getCarUrl(car: Car) {
 }
 
 function filterCars(cars: Car[], invert: boolean): Car[] {
-  return cars
-    .sort((a, b) => a.used_vehicle_price - b.used_vehicle_price)
-    .filter((car) => car.badge.includes('Performance Dual Motor All-Wheel Drive'))
-    .filter((car) => {
-      if (
-        // car.year === 2022
-        car.vin.slice(-7, -6) === 'F' &&
-        parseInt(car.vin.slice(-6)) > 370000 &&
-        (car.features.includes('Enhanced Autopilot') || car.features.includes('Full Self-Driving Capability'))
-      ) {
-        return !invert;
-      } else {
-        return invert;
-      }
-    });
+  return (
+    cars
+      .sort((a, b) => a.used_vehicle_price - b.used_vehicle_price)
+      // .filter((car) => car.badge.includes('Performance Dual Motor All-Wheel Drive'))
+      .filter((car) => {
+        if (
+          // car.year === 2022
+          car.vin.slice(-7, -6) === 'F' &&
+          parseInt(car.vin.slice(-6)) > 370000 &&
+          (car.features.includes('Enhanced Autopilot') || car.features.includes('Full Self-Driving Capability'))
+        ) {
+          return !invert;
+        } else {
+          return invert;
+        }
+      })
+  );
 }
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
 
+  const [carType, setCarType] = useState<CarType>('MYP');
+
   useEffect(() => {
     setIsLoading(true);
-    fetchTeslaInventory()
+    fetchTeslaInventory(carType)
       .then((data) => setCars(data))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [carType]);
 
   const filteredCars: Car[] = filterCars(cars, false);
   const otherCars: Car[] = filterCars(cars, true);
@@ -144,13 +156,31 @@ function App() {
       <CssBaseline />
       <Container maxWidth={'xl'}>
         <Typography variant={'h4'} mb={'20px'}>
-          MYP with (Potentially) HW3
+          Results with (Potentially) HW3
         </Typography>
-        {isLoading ? <CircularProgress /> : <CarGridView cars={filteredCars} />}
+        <Box mb={'20px'}>
+          <ToggleButtonGroup value={carType} exclusive onChange={(event, value) => setCarType(value)}>
+            <ToggleButton value="MYLR">MYLR</ToggleButton>
+            <ToggleButton value="MYP">MYP</ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+        {isLoading ? (
+          <Box>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <CarGridView cars={filteredCars} />
+        )}
         <Typography variant={'h4'} mb={'20px'} mt={'20px'}>
           Other Results
         </Typography>
-        {isLoading ? <CircularProgress /> : <CarGridView cars={otherCars} />}
+        {isLoading ? (
+          <Box>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <CarGridView cars={otherCars} />
+        )}
       </Container>
     </Box>
   );
@@ -186,10 +216,13 @@ function CarGridView({ cars }: { cars: Car[] }) {
             <Grid item sm={12} md={6} lg={4} key={car.vin}>
               <Card sx={{ height: '100%' }}>
                 <CardContent>
-                  <Box display={'flex'} justifyContent={'space-between'}>
+                  <Box display={'flex'} justifyContent={'space-between'} mb={'-5px'}>
                     <Typography variant={'h5'}>{car.year} Model Y</Typography>
                     <Typography variant={'h5'}>${car.used_vehicle_price}</Typography>
                   </Box>
+                  <Typography variant={'caption'} mb={'10px'}>
+                    {car.badge}
+                  </Typography>
                   <Box display={'flex'} justifyContent={'space-between'}>
                     <Typography>{car.odometer} miles</Typography>
                     <Tooltip title={`added on ${car.date_added}`}>
