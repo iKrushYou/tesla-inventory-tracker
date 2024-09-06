@@ -231,7 +231,9 @@ function CarGridView({ cars }: { cars: Car[] }) {
               <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Box display={'flex'} justifyContent={'space-between'} mb={'-5px'}>
-                    <Typography variant={'h5'}>{car.year} Model Y</Typography>
+                    <Typography variant={'h5'}>
+                      {car.year} {car.model === 'my' ? 'Model Y' : 'Model 3'}
+                    </Typography>
                     <Typography variant={'h5'}>${car.used_vehicle_price}</Typography>
                   </Box>
                   <Typography variant={'caption'} mb={'10px'}>
