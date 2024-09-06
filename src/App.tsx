@@ -82,13 +82,23 @@ export interface PriceInfo {
   active: string;
 }
 
-type CarType = 'MYLR' | 'MYP';
+type CarType = 'MYLR' | 'MYP' | 'M3LR' | 'M3P';
 
 const searchParams: Record<CarType, string> = {
   MYLR:
     'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Long%20Range%20All-Wheel%20Drive',
   MYP:
     'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=my&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
+  M3LR:
+    'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=MODEL_3&sold=2&filter=&vin=&status=used&features[]=Long%20Range%20All-Wheel%20Drive',
+  M3P:
+    'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=MODEL_3&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
+};
+
+const getCarImageUrl = (car: any) => {
+  const model = car.model === 'my' ? 'my' : 'm3';
+  const view = car.model === 'my' ? 'FRONT34' : 'STUD_3QTR';
+  return `https://static-assets.tesla.com/configurator/compositor?context=design_studio_2&options=${car.option_code_list}&view=${view}&model=${model}&size=1920&bkba_opt=2&crop=0,0,0,0&`;
 };
 
 async function fetchTeslaInventory(carType: CarType): Promise<Car[]> {
@@ -112,7 +122,8 @@ async function fetchTeslaInventory(carType: CarType): Promise<Car[]> {
 }
 
 function getCarUrl(car: Car) {
-  return `https://www.tesla.com/my/order/${car.vin}`;
+  const model = car.model === 'my' ? 'my' : 'm3';
+  return `https://www.tesla.com/${model}/order/${car.vin}`;
 }
 
 function filterCars(cars: Car[], invert: boolean): Car[] {
@@ -123,9 +134,10 @@ function filterCars(cars: Car[], invert: boolean): Car[] {
       .filter((car) => {
         if (
           // car.year === 2022
-          car.vin.slice(-7, -6) === 'F' &&
-          parseInt(car.vin.slice(-6)) > 370000 &&
-          (car.features.includes('Enhanced Autopilot') || car.features.includes('Full Self-Driving Capability'))
+          // car.vin.slice(-7, -6) === 'F' &&
+          // parseInt(car.vin.slice(-6)) > 370000 &&
+          car.features.includes('Enhanced Autopilot') ||
+          car.features.includes('Full Self')
         ) {
           return !invert;
         } else {
@@ -156,12 +168,14 @@ function App() {
       <CssBaseline />
       <Container maxWidth={'xl'}>
         <Typography variant={'h4'} mb={'20px'}>
-          Results with (Potentially) HW3
+          Results with FSD
         </Typography>
         <Box mb={'20px'}>
           <ToggleButtonGroup value={carType} exclusive onChange={(event, value) => setCarType(value)}>
             <ToggleButton value="MYLR">MYLR</ToggleButton>
             <ToggleButton value="MYP">MYP</ToggleButton>
+            <ToggleButton value="M3LR">M3LR</ToggleButton>
+            <ToggleButton value="M3P">M3P</ToggleButton>
           </ToggleButtonGroup>
         </Box>
         {isLoading ? (
@@ -231,7 +245,7 @@ function CarGridView({ cars }: { cars: Car[] }) {
                       </Typography>
                     </Tooltip>
                   </Box>
-                  <Typography>{car.location.length > 0 ? car.location : 'N/A'}</Typography>
+                  <Typography>{car?.location?.length > 0 ? car.location : 'N/A'}</Typography>
                   <Box display={'flex'} justifyContent={'space-between'}>
                     <Box display={'flex'}>
                       <Typography>
@@ -259,7 +273,7 @@ function CarGridView({ cars }: { cars: Car[] }) {
                   >
                     <Box
                       component={'img'}
-                      src={`https://static-assets.tesla.com/configurator/compositor?context=design_studio_2&options=${car.option_code_list}&view=FRONT34&model=my&size=1920&bkba_opt=2&crop=0,0,0,0&`}
+                      src={getCarImageUrl(car)}
                       width={'100%'}
                       maxHeight={['300px']}
                       sx={{ objectFit: 'contain' }}
