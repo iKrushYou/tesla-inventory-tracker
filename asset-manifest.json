@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/tesla-inventory-tracker/static/css/main.f855e6bc.css",
-    "main.js": "/tesla-inventory-tracker/static/js/main.ac6543a7.js",
+    "main.js": "/tesla-inventory-tracker/static/js/main.3e70d8ed.js",
     "static/js/787.15682a8e.chunk.js": "/tesla-inventory-tracker/static/js/787.15682a8e.chunk.js",
     "index.html": "/tesla-inventory-tracker/index.html",
     "main.f855e6bc.css.map": "/tesla-inventory-tracker/static/css/main.f855e6bc.css.map",
-    "main.ac6543a7.js.map": "/tesla-inventory-tracker/static/js/main.ac6543a7.js.map",
+    "main.3e70d8ed.js.map": "/tesla-inventory-tracker/static/js/main.3e70d8ed.js.map",
     "787.15682a8e.chunk.js.map": "/tesla-inventory-tracker/static/js/787.15682a8e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.ac6543a7.js"
+    "static/js/main.3e70d8ed.js"
   ]
 }
