@@ -82,7 +82,7 @@ export interface PriceInfo {
   active: string;
 }
 
-type CarType = 'MYLR' | 'MYP' | 'M3LR' | 'M3P';
+type CarType = 'M3LR' | 'M3P' | 'MYLR' | 'MYP';
 
 const searchParams: Record<CarType, string> = {
   MYLR:
@@ -95,7 +95,7 @@ const searchParams: Record<CarType, string> = {
     'https://teslacpo.io/api/?action=query&sort=used_vehicle_price%20ASC&model=MODEL_3&sold=2&filter=&vin=&status=used&features[]=Performance%20Upgrade',
 };
 
-const getCarImageUrl = (car: any) => {
+const getCarImageUrl = (car: Car) => {
   const model = car.model === 'my' ? 'my' : 'm3';
   const view = car.model === 'my' ? 'FRONT34' : 'STUD_3QTR';
   return `https://static-assets.tesla.com/configurator/compositor?context=design_studio_2&options=${car.option_code_list}&view=${view}&model=${model}&size=1920&bkba_opt=2&crop=0,0,0,0&`;
@@ -151,7 +151,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
 
-  const [carType, setCarType] = useState<CarType>('MYP');
+  const [carType, setCarType] = useState<CarType>('M3LR');
 
   useEffect(() => {
     setIsLoading(true);
@@ -172,10 +172,10 @@ function App() {
         </Typography>
         <Box mb={'20px'}>
           <ToggleButtonGroup value={carType} exclusive onChange={(event, value) => setCarType(value)}>
-            <ToggleButton value="MYLR">MYLR</ToggleButton>
-            <ToggleButton value="MYP">MYP</ToggleButton>
             <ToggleButton value="M3LR">M3LR</ToggleButton>
             <ToggleButton value="M3P">M3P</ToggleButton>
+            <ToggleButton value="MYLR">MYLR</ToggleButton>
+            <ToggleButton value="MYP">MYP</ToggleButton>
           </ToggleButtonGroup>
         </Box>
         {isLoading ? (
