@@ -167,9 +167,6 @@ function App() {
     <Box bgcolor={'#eee'} p={'20px'}>
       <CssBaseline />
       <Container maxWidth={'xl'}>
-        <Typography variant={'h4'} mb={'20px'}>
-          Results with FSD
-        </Typography>
         <Box mb={'20px'}>
           <ToggleButtonGroup value={carType} exclusive onChange={(event, value) => setCarType(value)}>
             <ToggleButton value="M3LR">M3LR</ToggleButton>
@@ -178,6 +175,9 @@ function App() {
             <ToggleButton value="MYP">MYP</ToggleButton>
           </ToggleButtonGroup>
         </Box>
+        <Typography variant={'h4'} mb={'20px'}>
+          Results with FSD
+        </Typography>
         {isLoading ? (
           <Box>
             <CircularProgress />

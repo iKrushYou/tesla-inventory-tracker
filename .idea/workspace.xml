@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0450ae40-f555-4d30-8f66-a14e52502649" name="Changes" comment="fixed model name display">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0450ae40-f555-4d30-8f66-a14e52502649" name="Changes" comment="switched order of tabs">
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +109,7 @@
       <workItem from="1700699055459" duration="85000" />
       <workItem from="1700699147192" duration="7202000" />
       <workItem from="1701805068053" duration="1325000" />
-      <workItem from="1725651011299" duration="1261000" />
+      <workItem from="1725651011299" duration="1311000" />
     </task>
     <task id="LOCAL-00001" summary="updated package.json">
       <option name="closed" value="true" />
@@ -168,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725652169935</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="switched order of tabs">
+      <option name="closed" value="true" />
+      <created>1725652283190</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1725652283190</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,7 +188,8 @@
     <MESSAGE value="added toggle to view MYLR" />
     <MESSAGE value="fixed a null bug&#10;added M3&#10;removed VIN filter" />
     <MESSAGE value="fixed model name display" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed model name display" />
+    <MESSAGE value="switched order of tabs" />
+    <option name="LAST_COMMIT_MESSAGE" value="switched order of tabs" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
